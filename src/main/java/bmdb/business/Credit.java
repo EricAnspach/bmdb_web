@@ -13,14 +13,14 @@ public class Credit {
 	private int id;
 	private int movieId;
 	private int actorId;
-	private String characterNameString;
+	private String characterName;
 	
 	public Credit(int id, int movieId, int actorId, String characterNameString) {
 		super();
 		this.id = id;
 		this.movieId = movieId;
 		this.actorId = actorId;
-		this.characterNameString = characterNameString;
+		this.characterName = characterNameString;
 	}
 
 	public int getId() {
@@ -48,10 +48,10 @@ public class Credit {
 	}
 
 	public String getCharacterNameString() {
-		return characterNameString;
+		return characterName;
 	}
 
 	public void setCharacterNameString(String characterNameString) {
-		this.characterNameString = characterNameString;
+		this.characterName = characterNameString;
 	}	
 }
