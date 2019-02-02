@@ -5,9 +5,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -60,6 +62,12 @@ public class ActorController {
 		jsonResponse = JsonResponse.getInstance(saveActor(actor));	
 		return jsonResponse;
 	}
+	
+	@PutMapping("/{id}")
+	public @ResponseBody JsonResponse updateActor(@PathVariable int id, @RequestBody Actor a) {
+		// should check to see if user exists first		
+		return saveActor(a);
+	}	
 
 	private @ResponseBody JsonResponse saveActor(Actor actor) {
 		JsonResponse jsonResponse = null;
@@ -68,6 +76,19 @@ public class ActorController {
 			jsonResponse = JsonResponse.getInstance(actor);
 		} catch (DataIntegrityViolationException e) {
 			jsonResponse = JsonResponse.getInstance(new Exception(e.getMessage()));
+		}
+		return jsonResponse;
+	}
+	
+	@DeleteMapping("/{id}")
+	public @ResponseBody JsonResponse removeActor(@PathVariable int id) {
+		JsonResponse jsonResponse = null;
+		Optional<Actor> a = actorRepo.findById(id);
+		if (a.isPresent()) {
+			actorRepo.deleteById(id);
+			jsonResponse = JsonResponse.getInstance(a);
+		} else {
+			jsonResponse = JsonResponse.getInstance(new Exception("Actor delete unsuccessful, actor " + id + " does not exist."));
 		}
 		return jsonResponse;
 	}
