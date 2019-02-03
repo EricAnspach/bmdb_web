@@ -14,22 +14,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import bmdb.business.Movie;
-import bmdb.business.MovieRepository;
+import bmdb.business.Genre;
+import bmdb.business.GenreRepository;
 import bmdb.util.JsonResponse;
 
-
 @Controller
-@RequestMapping(path="/movies")
-public class MovieController {
+@RequestMapping(path="/genres")
+public class GenreController {
+
 	@Autowired
-	private MovieRepository movieRepo;
+	private GenreRepository genreRepo;
 	
 	@GetMapping("/")	
-	public @ResponseBody JsonResponse getAllMovies() {
+	public @ResponseBody JsonResponse getAllGenres() {
 		JsonResponse jsonResponse = null;
 		try {
-			jsonResponse = JsonResponse.getInstance(movieRepo.findAll());
+			jsonResponse = JsonResponse.getInstance(genreRepo.findAll());
 			
 		} catch (Exception e) {
 			jsonResponse = JsonResponse.getInstance(e);
@@ -38,14 +38,14 @@ public class MovieController {
 	}
 	
 	@GetMapping("/{id}")
-	public @ResponseBody JsonResponse getMovie(@PathVariable int id) {
+	public @ResponseBody JsonResponse getGenre(@PathVariable int id) {
 		JsonResponse jsonResponse = null;		
 		try {
-			Optional<Movie> m = movieRepo.findById(id);
-			if (m.isPresent()) {
-				jsonResponse = JsonResponse.getInstance(m);
+			Optional<Genre> g = genreRepo.findById(id);
+			if (g.isPresent()) {
+				jsonResponse = JsonResponse.getInstance(g);
 			} else {
-				jsonResponse = JsonResponse.getInstance(new Exception("No movie found for id = " + id));
+				jsonResponse = JsonResponse.getInstance(new Exception("No genre found for id = " + id));
 			}
 		} catch (Exception e) {
 			jsonResponse = JsonResponse.getInstance(e);
@@ -54,25 +54,23 @@ public class MovieController {
 	}
 	
 	@PostMapping(path="/")
-	public @ResponseBody JsonResponse addNewMovie(@RequestBody Movie m) {
-		// @ResponseBody means the returned String is the response, not a view name
-		// @RequestParam means it is a parameter from the GET or POST request
+	public @ResponseBody JsonResponse addNewGenre(@RequestBody Genre g) {
 		JsonResponse jsonResponse = null;
-		jsonResponse = JsonResponse.getInstance(saveMovie(m));	
+		jsonResponse = JsonResponse.getInstance(saveGenre(g));
 		return jsonResponse;
 	}
 	
 	@PutMapping("/{id}")
-	public @ResponseBody JsonResponse updateMovie(@PathVariable int id, @RequestBody Movie m) {
+	public @ResponseBody JsonResponse updateGenre(@PathVariable int id, @RequestBody Genre g) {
 		// should check to see if user exists first		
-		return saveMovie(m);
+		return saveGenre(g);
 	}	
 
-	private @ResponseBody JsonResponse saveMovie(Movie m) {
+	private @ResponseBody JsonResponse saveGenre(Genre g) {
 		JsonResponse jsonResponse = null;
 		try {
-			movieRepo.save(m);
-			jsonResponse = JsonResponse.getInstance(m);
+			genreRepo.save(g);
+			jsonResponse = JsonResponse.getInstance(g);
 		} catch (DataIntegrityViolationException e) {
 			jsonResponse = JsonResponse.getInstance(new Exception(e.getMessage()));
 		}
@@ -80,15 +78,16 @@ public class MovieController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public @ResponseBody JsonResponse removeMovie(@PathVariable int id) {
+	public @ResponseBody JsonResponse removeGenre(@PathVariable int id) {
 		JsonResponse jsonResponse = null;
-		Optional<Movie> m = movieRepo.findById(id);
-		if (m.isPresent()) {
-			movieRepo.deleteById(id);
-			jsonResponse = JsonResponse.getInstance(m);
+		Optional<Genre> g = genreRepo.findById(id);
+		if (g.isPresent()) {
+			genreRepo.deleteById(id);
+			jsonResponse = JsonResponse.getInstance(g);
 		} else {
-			jsonResponse = JsonResponse.getInstance(new Exception("Movie delete unsuccessful, movie " + id + " does not exist."));
+			jsonResponse = JsonResponse.getInstance(new Exception("Genre delete unsuccessful, genre " + id + " does not exist."));
 		}
 		return jsonResponse;
 	}
+	
 }
