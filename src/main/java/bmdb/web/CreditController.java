@@ -14,24 +14,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import bmdb.business.Actor;
-import bmdb.business.ActorRepository;
+import bmdb.business.Credit;
+import bmdb.business.CreditRepository;
 import bmdb.util.JsonResponse;
 
 @Controller
-@RequestMapping(path="/actors")
-public class ActorController {
-	
+@RequestMapping(path="/credits")
+public class CreditController {
+
 	@Autowired
-	private ActorRepository actorRepo;
+	private CreditRepository creditRepo;
 	
-	// Get all users
 	@GetMapping("/")	
-	public @ResponseBody JsonResponse getAllActors() {
+	public @ResponseBody JsonResponse getAllCredits() {
 		JsonResponse jsonResponse = null;
 		try {
-			jsonResponse = JsonResponse.getInstance(actorRepo.findAll());
-			
+			jsonResponse = JsonResponse.getInstance(creditRepo.findAll());			
 		} catch (Exception e) {
 			jsonResponse = JsonResponse.getInstance(e);
 		}		
@@ -39,14 +37,14 @@ public class ActorController {
 	}
 	
 	@GetMapping("/{id}")
-	public @ResponseBody JsonResponse getActor(@PathVariable int id) {
+	public @ResponseBody JsonResponse getCredit(@PathVariable int id) {
 		JsonResponse jsonResponse = null;		
 		try {
-			Optional<Actor> a = actorRepo.findById(id);
-			if (a.isPresent()) {
-				jsonResponse = JsonResponse.getInstance(a);
+			Optional<Credit> c = creditRepo.findById(id);
+			if (c.isPresent()) {
+				jsonResponse = JsonResponse.getInstance(c);
 			} else {
-				jsonResponse = JsonResponse.getInstance(new Exception("No actor found for id = " + id));
+				jsonResponse = JsonResponse.getInstance(new Exception("No credit found for id = " + id));
 			}
 		} catch (Exception e) {
 			jsonResponse = JsonResponse.getInstance(e);
@@ -55,23 +53,23 @@ public class ActorController {
 	}
 	
 	@PostMapping(path="/")
-	public @ResponseBody JsonResponse addNewActor(@RequestBody Actor a) {
+	public @ResponseBody JsonResponse addNewCredit(@RequestBody Credit c) {
 		JsonResponse jsonResponse = null;
-		jsonResponse = JsonResponse.getInstance(saveActor(a));	
+		jsonResponse = JsonResponse.getInstance(saveCredit(c));
 		return jsonResponse;
 	}
 	
 	@PutMapping("/{id}")
-	public @ResponseBody JsonResponse updateActor(@PathVariable int id, @RequestBody Actor a) {
-		// should check to see if actor exists first		
-		return saveActor(a);
+	public @ResponseBody JsonResponse updateCredit(@PathVariable int id, @RequestBody Credit c) {
+		// should check to see if credit exists first		
+		return saveCredit(c);
 	}	
 
-	private @ResponseBody JsonResponse saveActor(Actor a) {
+	private @ResponseBody JsonResponse saveCredit(Credit c) {
 		JsonResponse jsonResponse = null;
 		try {
-			actorRepo.save(a);
-			jsonResponse = JsonResponse.getInstance(a);
+			creditRepo.save(c);
+			jsonResponse = JsonResponse.getInstance(c);
 		} catch (DataIntegrityViolationException e) {
 			jsonResponse = JsonResponse.getInstance(new Exception(e.getMessage()));
 		}
@@ -79,15 +77,16 @@ public class ActorController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public @ResponseBody JsonResponse removeActor(@PathVariable int id) {
+	public @ResponseBody JsonResponse removeCredit(@PathVariable int id) {
 		JsonResponse jsonResponse = null;
-		Optional<Actor> a = actorRepo.findById(id);
-		if (a.isPresent()) {
-			actorRepo.deleteById(id);
-			jsonResponse = JsonResponse.getInstance(a);
+		Optional<Credit> c = creditRepo.findById(id);
+		if (c.isPresent()) {
+			creditRepo.deleteById(id);
+			jsonResponse = JsonResponse.getInstance(c);
 		} else {
-			jsonResponse = JsonResponse.getInstance(new Exception("Actor delete unsuccessful, actor " + id + " does not exist."));
+			jsonResponse = JsonResponse.getInstance(new Exception("Credit delete unsuccessful, credit " + id + " does not exist."));
 		}
 		return jsonResponse;
 	}
+	
 }

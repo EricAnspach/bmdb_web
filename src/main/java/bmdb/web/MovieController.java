@@ -29,8 +29,7 @@ public class MovieController {
 	public @ResponseBody JsonResponse getAllMovies() {
 		JsonResponse jsonResponse = null;
 		try {
-			jsonResponse = JsonResponse.getInstance(movieRepo.findAll());
-			
+			jsonResponse = JsonResponse.getInstance(movieRepo.findAll());			
 		} catch (Exception e) {
 			jsonResponse = JsonResponse.getInstance(e);
 		}		
@@ -55,8 +54,6 @@ public class MovieController {
 	
 	@PostMapping(path="/")
 	public @ResponseBody JsonResponse addNewMovie(@RequestBody Movie m) {
-		// @ResponseBody means the returned String is the response, not a view name
-		// @RequestParam means it is a parameter from the GET or POST request
 		JsonResponse jsonResponse = null;
 		jsonResponse = JsonResponse.getInstance(saveMovie(m));	
 		return jsonResponse;
@@ -64,7 +61,7 @@ public class MovieController {
 	
 	@PutMapping("/{id}")
 	public @ResponseBody JsonResponse updateMovie(@PathVariable int id, @RequestBody Movie m) {
-		// should check to see if user exists first		
+		// should check to see if movie exists first		
 		return saveMovie(m);
 	}	
 

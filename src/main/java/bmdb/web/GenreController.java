@@ -29,8 +29,7 @@ public class GenreController {
 	public @ResponseBody JsonResponse getAllGenres() {
 		JsonResponse jsonResponse = null;
 		try {
-			jsonResponse = JsonResponse.getInstance(genreRepo.findAll());
-			
+			jsonResponse = JsonResponse.getInstance(genreRepo.findAll());			
 		} catch (Exception e) {
 			jsonResponse = JsonResponse.getInstance(e);
 		}		
@@ -62,7 +61,7 @@ public class GenreController {
 	
 	@PutMapping("/{id}")
 	public @ResponseBody JsonResponse updateGenre(@PathVariable int id, @RequestBody Genre g) {
-		// should check to see if user exists first		
+		// should check to see if genre exists first		
 		return saveGenre(g);
 	}	
 
