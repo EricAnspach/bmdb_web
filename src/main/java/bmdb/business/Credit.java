@@ -15,12 +15,16 @@ public class Credit {
 	private int actorId;
 	private String characterName;
 	
-	public Credit(int id, int movieId, int actorId, String characterNameString) {
+	public Credit() {
+		super();
+	}
+
+	public Credit(int id, int movieId, int actorId, String characterName) {
 		super();
 		this.id = id;
 		this.movieId = movieId;
 		this.actorId = actorId;
-		this.characterName = characterNameString;
+		this.characterName = characterName;
 	}
 
 	public int getId() {

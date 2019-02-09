@@ -25,13 +25,11 @@ public class ActorController {
 	@Autowired
 	private ActorRepository actorRepo;
 	
-	// Get all users
 	@GetMapping("/")	
 	public @ResponseBody JsonResponse getAllActors() {
 		JsonResponse jsonResponse = null;
 		try {
-			jsonResponse = JsonResponse.getInstance(actorRepo.findAll());
-			
+			jsonResponse = JsonResponse.getInstance(actorRepo.findAll());			
 		} catch (Exception e) {
 			jsonResponse = JsonResponse.getInstance(e);
 		}		

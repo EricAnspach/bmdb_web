@@ -12,8 +12,12 @@ public class MovieGenre {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private int movieId;
-	private int genreId;
+	private int genreId;	
 	
+	public MovieGenre() {
+		super();
+	}
+
 	public MovieGenre(int id, int movieId, int genreId) {
 		super();
 		this.id = id;

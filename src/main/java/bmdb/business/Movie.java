@@ -14,8 +14,12 @@ public class Movie {
 	private String title;
 	private String rating;
 	private int year;
-	private String director;
+	private String director;	
 	
+	public Movie() {
+		super();
+	}
+
 	public Movie(int id, String title, String rating, int year, String director) {
 		super();
 		this.id = id;

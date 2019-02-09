@@ -11,8 +11,12 @@ public class Genre {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private String name;
+	private String name;	
 	
+	public Genre() {
+		super();
+	}
+
 	public Genre(int id, String name) {
 		super();
 		this.id = id;
