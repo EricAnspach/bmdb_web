@@ -51,11 +51,11 @@ public class Credit {
 		this.actorId = actorId;
 	}
 
-	public String getCharacterNameString() {
+	public String getCharacterName() {
 		return characterName;
 	}
 
-	public void setCharacterNameString(String characterNameString) {
-		this.characterName = characterNameString;
+	public void setCharacterName(String characterName) {
+		this.characterName = characterName;
 	}	
 }
