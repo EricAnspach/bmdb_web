@@ -88,4 +88,9 @@ public class ActorController {
 		}
 		return jsonResponse;
 	}
+	
+	@GetMapping("/getByLastname")
+	public @ResponseBody JsonResponse getActorByLastname(@RequestBody Actor a) {
+		return JsonResponse.getInstance(actorRepo.findByLastName(a.getLastName()));
+	}
 }

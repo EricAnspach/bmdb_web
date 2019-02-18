@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import bmdb.business.ActorRepository;
 import bmdb.business.Movie;
 import bmdb.business.MovieRepository;
 import bmdb.util.JsonResponse;
@@ -24,6 +25,8 @@ import bmdb.util.JsonResponse;
 public class MovieController {
 	@Autowired
 	private MovieRepository movieRepo;
+	@Autowired
+	private ActorRepository actorRepo;
 	
 	@GetMapping("/")	
 	public @ResponseBody JsonResponse getAllMovies() {
@@ -88,4 +91,7 @@ public class MovieController {
 		}
 		return jsonResponse;
 	}
+	
+//	@GetMapping("/getMovieByActor")
+	
 }
