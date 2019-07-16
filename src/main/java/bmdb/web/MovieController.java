@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ import bmdb.business.Movie;
 import bmdb.business.MovieRepository;
 import bmdb.util.JsonResponse;
 
-
+@CrossOrigin
 @Controller
 @RequestMapping(path="/movies")
 public class MovieController {
@@ -92,6 +93,6 @@ public class MovieController {
 		return jsonResponse;
 	}
 	
-//	@GetMapping("/getMovieByActor")
+//	@GetMapping("/getMoviesByActor")
 	
 }
