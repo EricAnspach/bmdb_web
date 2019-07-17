@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import bmdb.business.Actor;
@@ -12,7 +11,7 @@ import bmdb.business.ActorRepository;
 import bmdb.util.JsonResponse;
 
 @CrossOrigin
-@Controller
+@RestController
 @RequestMapping("/actors")
 public class ActorController {
 	
