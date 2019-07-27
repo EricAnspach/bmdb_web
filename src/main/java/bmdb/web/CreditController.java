@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
+import bmdb.business.Actor;
+import bmdb.business.ActorRepository;
 import bmdb.business.Credit;
 import bmdb.business.CreditRepository;
 import bmdb.util.JsonResponse;
@@ -17,6 +19,9 @@ public class CreditController {
 
 	@Autowired
 	private CreditRepository creditRepo;
+	
+	@Autowired
+	private ActorRepository actorRepo;
 	
 	@GetMapping("/")	
 	public @ResponseBody JsonResponse getAllCredits() {
@@ -82,6 +87,42 @@ public class CreditController {
 		return jsonResponse;
 	}
 	
-//	@GetMapping("/getCreditsByActor")
+	@GetMapping("/getByActorId/{id}")
+	public @ResponseBody JsonResponse getCreditsByActorId(@PathVariable int id) {
+		Optional<Actor> actor = actorRepo.findById(id);
+		
+		JsonResponse jsonResponse = null;
+		try {
+			jsonResponse = JsonResponse.getInstance(creditRepo.findByActor(actor));			
+		} catch (Exception e) {
+			jsonResponse = JsonResponse.getInstance(e);
+		}		
+		return jsonResponse;
+	}
 	
+//	@GetMapping("/getCreditsByActorName/{lastName}")
+//	public JsonResponse getCreditsByActorLastName(@PathVariable String lastName) {
+//		Actor actor = actorRepo.findByLastName(lastName);
+//		
+//		JsonResponse jsonResponse = null;
+//		try {
+//			jsonResponse = JsonResponse.getInstance(creditRepo.findByActor(actor));			
+//		} catch (Exception e) {
+//			jsonResponse = JsonResponse.getInstance(e);
+//		}		
+//		return jsonResponse;
+//	}
+//	
+//	@GetMapping("/getCreditsByActorFullName/{lastName}/{firstName}")
+//	public JsonResponse getCreditsByActorFullName(@PathVariable String lastName, String firstName) {
+//		Actor actor = actorRepo.findByLastNameAndFirstName(lastName, firstName);
+//		
+//		JsonResponse jsonResponse = null;
+//		try {
+//			jsonResponse = JsonResponse.getInstance(creditRepo.findByActor(actor));			
+//		} catch (Exception e) {
+//			jsonResponse = JsonResponse.getInstance(e);
+//		}		
+//		return jsonResponse;
+//	}
 }
