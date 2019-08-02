@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface CreditRepository extends CrudRepository <Credit, Integer> {
 	List<Credit> findByActor(Optional<Actor> actor);
 	List<Credit> findAllByActorId(int id);
+	List<Credit> findByMovie(Optional<Movie> movie);
 }

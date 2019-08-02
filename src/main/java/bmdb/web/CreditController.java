@@ -10,6 +10,8 @@ import bmdb.business.Actor;
 import bmdb.business.ActorRepository;
 import bmdb.business.Credit;
 import bmdb.business.CreditRepository;
+import bmdb.business.Movie;
+import bmdb.business.MovieRepository;
 import bmdb.util.JsonResponse;
 
 @CrossOrigin
@@ -22,6 +24,9 @@ public class CreditController {
 	
 	@Autowired
 	private ActorRepository actorRepo;
+	
+	@Autowired
+	private MovieRepository movieRepo;
 	
 	@GetMapping("/")	
 	public @ResponseBody JsonResponse getAllCredits() {
@@ -125,4 +130,19 @@ public class CreditController {
 //		}		
 //		return jsonResponse;
 //	}
+	
+	
+	@GetMapping("/getByMovieId/{id}")
+	public @ResponseBody JsonResponse getCreditsByMovieId(@PathVariable int id) {
+		Optional<Movie> movie = movieRepo.findById(id);
+		
+		JsonResponse jsonResponse = null;
+		try {
+			jsonResponse = JsonResponse.getInstance(creditRepo.findByMovie(movie));			
+		} catch (Exception e) {
+			jsonResponse = JsonResponse.getInstance(e);
+		}		
+		return jsonResponse;
+	}
+	
 }
